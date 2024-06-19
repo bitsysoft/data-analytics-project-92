@@ -64,7 +64,7 @@ WITH tbl AS (
 
 SELECT
     tbl.seller,
-    tbl.day_of_week,
+    trim(tbl.day_of_week) AS day_of_week,
     floor(sum(tbl.sale_sum)) AS income
 FROM tbl
 GROUP BY tbl.seller, tbl.day_of_week, tbl.employee_id, tbl.day_num
@@ -80,12 +80,11 @@ SELECT
         WHEN c.age > 40 THEN '40+'
         ELSE '26-40'
     END AS age_category,
-    count(DISTINCT s.customer_id) AS age_count
-FROM sales AS s
-INNER JOIN customers AS c ON s.customer_id = c.customer_id
+    count(c.customer_id) AS age_count
+FROM customers AS c
 GROUP BY age_category
 ORDER BY age_category;
-                      
+
 -- Данные по количеству уникальных покупателей и выручке, которую они принесли
 SELECT
     to_char(s.sale_date, 'YYYY-MM') AS selling_month,
