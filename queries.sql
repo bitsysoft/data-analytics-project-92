@@ -135,4 +135,3 @@ SELECT
     ) AS seller
 FROM res
 ORDER BY res.customer_id;
-
