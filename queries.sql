@@ -54,7 +54,7 @@ WITH tbl AS (
     SELECT
         e.employee_id,
         e.first_name || ' ' || e.last_name AS seller,
-        trim(to_char(s.sale_date, 'day')) AS day_of_week,
+        to_char(s.sale_date, 'day') AS day_of_week,
         s.quantity * p.price AS sale_sum,
         extract(ISODOW FROM s.sale_date) AS day_num
     FROM sales AS s
@@ -64,7 +64,7 @@ WITH tbl AS (
 
 SELECT
     tbl.seller,
-    trim(tbl.day_of_week) AS day_of_week,
+    tbl.day_of_week AS day_of_week,
     floor(sum(tbl.sale_sum)) AS income
 FROM tbl
 GROUP BY tbl.seller, tbl.day_of_week, tbl.employee_id, tbl.day_num
